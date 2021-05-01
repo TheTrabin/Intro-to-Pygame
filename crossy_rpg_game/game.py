@@ -38,6 +38,18 @@ class Game:
 
         pygame.display.update()  # The display update loop
 
+    def detect_collision(self, object_1, object_2):
+        if object_1.y > (object_2.y + object_2.height):
+            return False
+        elif (object_1.y + object_1.height) < object_2.y:
+            return False
+
+        if object_1.x > (object_2.x + object_2.width):
+            return False
+        elif (object_1.x + object_1.width) < object_2.x:
+            return False
+
+        return True
 
     def run_game_loop(self):
 
@@ -56,13 +68,19 @@ class Game:
                         player_direction = 1 # move player down
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                        player_direction = 0
+                        player_direction = 0 # Stop movement
 
             # Execute Logic
             self.player.move(player_direction, self.height) # Move player
             self.enemy.move(self.width)
             # Update Display
             self.draw_objects()
+
+            # Detect Collisions
+            if self.detect_collision(self.player, self.enemy):
+                return
+            elif self.detect_collision(self.player, self.treasure):
+                return
             
             # how often it updates - This is set to 60 times per second.
             self.clock.tick(60)
