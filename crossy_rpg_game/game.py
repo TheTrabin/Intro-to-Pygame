@@ -1,6 +1,7 @@
 import pygame
 from gameObject import GameObject
 from player import Player
+from enemy import Enemy
 
 # Create a game class to handle the loop
 class Game:
@@ -19,10 +20,8 @@ class Game:
         #Game Objects
         self.background = GameObject(0,0, self.width, self.height, 'assets/background.png')
         self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
-        self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
-
-        enemy_image = pygame.image.load('assets/enemy.png')
-        self.enemy = pygame.transform.scale(enemy_image, (50, 50))
+        self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)       
+        self.enemy = Enemy(50, 600, 50, 50, 'assets/enemy.png', 10)
         
         
 
@@ -34,7 +33,7 @@ class Game:
         self.game_window.blit(self.background.image, (self.background.x, self.background.y))
         self.game_window.blit(self.treasure.image, (self.treasure.x, self.treasure.y))
         self.game_window.blit(self.player.image, (self.player.x, self.player.y))
-        self.game_window.blit(self.enemy, (375, 375))
+        self.game_window.blit(self.enemy.image, (self.enemy.x, self.enemy.y))
         
 
         pygame.display.update()  # The display update loop
@@ -61,7 +60,7 @@ class Game:
 
             # Execute Logic
             self.player.move(player_direction, self.height) # Move player
-
+            self.enemy.move(self.width)
             # Update Display
             self.draw_objects()
             
