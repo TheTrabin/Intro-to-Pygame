@@ -41,14 +41,28 @@ class Game:
 
 
     def run_game_loop(self):
+
+        player_direction = 0
+
         while True:
             # Handle Events
             events = pygame.event.get()  # Gets a list of all events within pygame
             for event in events:
                 if event.type == pygame.QUIT:  # if quit is active
                     return  # breaks out of the function and continues what's outside of the function
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        player_direction = -1 # move player up
+                    elif event.key == pygame.K_DOWN:
+                        player_direction = 1 # move player down
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                        player_direction = 0
 
             # Execute Logic
+            self.player.move(player_direction) # Move player
+
+            # Update Display
             self.draw_objects()
             
             # how often it updates - This is set to 60 times per second.
