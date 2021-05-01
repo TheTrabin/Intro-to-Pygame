@@ -8,7 +8,7 @@ class Enemy(GameObject):
 
         self.speed = speed
 
-    #movement, just up and down for now
+    #movement, left and right
     def move(self, max_width):
         if self.x <= 0:
             self.speed = abs(self.speed)
