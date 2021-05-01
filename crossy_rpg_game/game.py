@@ -1,5 +1,5 @@
 import pygame
-
+from gameObject import GameObject
 
 # Create a game class to handle the loop
 class Game:
@@ -14,13 +14,10 @@ class Game:
         self.game_window = pygame.display.set_mode((self.width, self.height))
 
         self.clock = pygame.time.Clock()  # The Clock, or how often things update
-
-        background_image = pygame.image.load('assets/background.png')  # loads the image
-        # scales the image. Takes the image as a variable, then a tuple as to what the height and width
-        self.background = pygame.transform.scale(background_image, (self.width, self.height))
-
-        treasure_image = pygame.image.load('assets/treasure.png')
-        self.treasure = pygame.transform.scale(treasure_image, (50, 50))
+                
+        self.background = GameObject(0,0, self.width, self.height, 'assets/background.png')
+        
+        self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
 
         enemy_image = pygame.image.load('assets/enemy.png')
         self.enemy = pygame.transform.scale(enemy_image, (50, 50))
@@ -33,8 +30,8 @@ class Game:
         # Update Display
         self.game_window.fill(self.white_color)  # Add color to the window
             # blit takes the image and a tuple with x,y variables
-        self.game_window.blit(self.background, (0, 0))
-        self.game_window.blit(self.treasure, (375, 50))
+        self.game_window.blit(self.background.image, (self.background.x, self.background.y))
+        self.game_window.blit(self.treasure.image, (self.treasure.x, self.treasure.y))
         self.game_window.blit(self.enemy, (375, 375))
         self.game_window.blit(self.player, (375, 750))
 
